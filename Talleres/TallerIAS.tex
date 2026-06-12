@@ -1,4 +1,4 @@
-% Created 2026-06-12 Fri 18:09
+% Created 2026-06-12 Fri 18:16
 % Intended LaTeX compiler: pdflatex
 \documentclass{article}
 \usepackage[utf8]{inputenc}
@@ -44,7 +44,7 @@ ARQUITECTURA DE COMPUTADORES}
 \thispagestyle{fancy}
 
 \section{Objetivos}
-\label{sec:org8208761}
+\label{sec:orgb1bcf9a}
 
 \begin{itemize}
 \item Comprender el ciclo de captación, decodificación y ejecución de la
@@ -56,19 +56,19 @@ para determinar el estado final de los registros.
 \end{itemize}
 
 \section{Instrucciones}
-\label{sec:org1590d7b}
+\label{sec:org1b31dd6}
 
 Complete las solicitudes del taller y suba el archivo \texttt{.org} y \texttt{.pdf}
 al aula virtual. Use las combinaciones de teclado para trabajar en Emacs.
 
 \section{Recursos}
-\label{sec:org4e779df}
+\label{sec:orgcc9cf07}
 
 Para este taller consulte el libro \citetitle{stallings2006esp}
 disponible en \href{https://epnecuador-my.sharepoint.com/:f:/g/personal/lenin\_falconi\_epn\_edu\_ec/EgjH2RoedD5NuswqpOt8ExsB\_DE052v9Rlrg0QpEtbimDg?e=WoqexR}{EPN-SHAREPOINT (Clic aquí)} y use su WSL con Emacs para editar el archivo.
 
 \subsection{Observaciones y Recomendaciones}
-\label{sec:org5c84b11}
+\label{sec:org2613c63}
 \begin{itemize}
 \item Tenga en cuenta la ruta a las imágenes y a la bibliografía. Se le
 recomienda que realice una clonación o un fork del repositorio de la
@@ -78,7 +78,7 @@ estar operativa y funcional (es decir, Emacs, \LaTeX).
 \end{itemize}
 
 \section{Taller: Máquina de Von Neumann}
-\label{sec:org91c822b}
+\label{sec:org13882f6}
 
 La máquina de Von Neumann realiza operaciones en un ciclo repetitivo de
 \textbf{captación}, \textbf{decodificación} y \textbf{ejecución}. Para esto, el computador
@@ -91,7 +91,7 @@ primeros bits de cada parte corresponden al \emph{opcode} y los restantes
 leer o a la que se debe escribir.
 
 \subsection{Conjunto de Instrucciones IAS}
-\label{sec:org4771995}
+\label{sec:org56486f2}
 
 Complete la Tabla \ref{tab:tablaISA-IAS}  de instrucciones del computador IAS
 \autocite[p.47]{stallings2006esp} usando la notación RTL\footnote{Register Transfer Language o Lenguaje de Transferencia de Registros.}. Se suministra
@@ -134,7 +134,7 @@ sobre las palabras clave.
 \newpage
 
 \subsection{Ejercicio}
-\label{sec:org4259ecd}
+\label{sec:org520c4f6}
 
 En la máquina IAS, las instrucciones se dividen en dos segmentos:
 i) izquierdo, desde el bit 0 a 19, y ii) derecho, desde el bit 20 al 39. Primero
@@ -143,12 +143,12 @@ contador de programa inicia en la posición \([PC] \leftarrow 300\). El conjunto
 instrucciones del computador o ISA\footnote{Instruction Set Architecture: conjunto de instrucciones que la máquina IAS puede interpretar y ejecutar.} está definido en la Tabla
 \ref{tab:tablaISA-IAS}. A fin de terminar el programa, se agrega la
 instrucción \texttt{0x99} que lleva al computador al estado de HALT. Conteste las
-siguientes preguntas considerando la Tabla \ref{tab:org23b7fc5} como el
+siguientes preguntas considerando la Tabla \ref{tab:orgc35edd6} como el
 mapa de memoria de la máquina y obtenga el programa en lenguaje ensamblador y en
 RTL.
 
 \begin{table}[htbp]
-\caption{\label{tab:org23b7fc5}Mapa de Memoria}
+\caption{\label{tab:orgc35edd6}Mapa de Memoria}
 \centering
 \begin{tabular}{rrrrr}
 \hline
@@ -166,7 +166,7 @@ Dirección & \(Opcode_1\) & \(X_1\) & \(Opcode_2\) & \(X_2\)\\[0pt]
 \end{table}
 
 \subsubsection{Preguntas}
-\label{sec:org912c720}
+\label{sec:org82d044e}
 
 \begin{enumerate}
 \item ¿Qué resultado se tiene al final en el registro del acumulador?
@@ -193,7 +193,7 @@ Respuesta:
 \end{enumerate}
 
 \subsubsection{Código RTL}
-\label{sec:orgb80fdc1}
+\label{sec:org38f391b}
 
 Escriba en notación de transferencia de registros el programa que
 ejecuta el computador IAS.
@@ -205,7 +205,7 @@ ejecuta el computador IAS.
 
 
 \subsubsection{Código Assembler}
-\label{sec:org58190ef}
+\label{sec:org039c051}
 
 Escriba el código Assembler del programa que ejecuta el computador IAS.
 
@@ -215,7 +215,7 @@ LOAD M(940)
 \end{verbatim}
 
 \section{Equipo de Trabajo}
-\label{sec:org3626ba3}
+\label{sec:org569065f}
 
 Complete la información de los integrantes del grupo.
 
@@ -232,7 +232,7 @@ Nombre & Email & Rol\\[0pt]
 \end{center}
 
 \section{Verificación de Entregables [0\%]}
-\label{sec:orga22a71f}
+\label{sec:org08fb2c0}
 
 Ejecute \texttt{C-c C-c} sobre los ítems de tarea según se hayan cumplido o
 no. Si un ítem no pudo realizarse, anote en la sección de problemas
@@ -249,7 +249,7 @@ las razones.
 \end{itemize}
 
 \subsection{Problemas con la tarea / logísticos}
-\label{sec:org537d9d2}
+\label{sec:orgd937b40}
 
 \begin{itemize}
 \item Tarea \(X_1\) no pudo completarse debido a:
