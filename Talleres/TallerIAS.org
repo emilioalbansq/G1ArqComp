@@ -172,8 +172,10 @@ RTL.
 1. ¿Qué resultado se tiene al final en el registro del acumulador?
 
    Respuesta:
-   El valor final en el acumulador es -3
-   $[AC] \leftarrow -3$
+   El valor final en el acumulador:
+   - En formato Decimal es -3
+   - En formato Hexadecimal es FFFFFFFFFD
+     $[AC] \leftarrow FFFFFFFFFD$
    
 2. ¿Se sobrescribe algún registro como resultado de la ejecución? Si
    es verdadero, indique qué registro y con qué valor.
@@ -181,20 +183,19 @@ RTL.
    ejecución.
    Los valores finales en las direcciones de memoria modificadas son:
    Respuesta:
-   - $[940] \leftarrow -3$ (Primero se sobrescribió con 3, y al final con -3)
-   - $[941] \leftarrow 6$
-   - $[AC] \leftarrow -3$
+   - $[940] \leftarrow FFFFFFFFFD$
+   - $[941] \leftarrow 0000000006$
+   - $[AC] \leftarrow FFFFFFFFFD$
 
 3. ¿Cuál es el valor del bit de Carry? ¿Qué operación modifica el bit?
    Respuesta:
    - $Carry = 0$
 
-   - No se produce desbordamiento (overflow) en ninguna de las
-     operaciones aritméticas. La resta ($5 - 2$) y el desplazamiento a
-     la izquierda ($3 \times 2$) generan resultados que caben
-     perfectamente dentro de la capacidad de 40 bits del acumulador de
-     la máquina IAS, por lo que el bit de Carry para indicar un error
-     de magnitud se mantiene en 0.
+   - Aunque después de la instrucción $SUB M(941)$, es decir la
+     operación $5-2$ generó un bit de carry $= 1$, siguiente a esta
+     instrucción que es $LSH$, es decir la operación $[AC]\times2$, el
+     bit de acarreo se actualizó a 0, ya que el bit anterior de carry
+     fue desplazado hacia afuera.
 
 *** Código RTL
 
@@ -232,14 +233,14 @@ Complete la información de los integrantes del grupo.
 |                |                           |            |
 |----------------+---------------------------+------------|
 
-* Verificación de Entregables [28%]
+* Verificación de Entregables [42%]
 
 Ejecute ~C-c C-c~ sobre los ítems de tarea según se hayan cumplido o
 no. Si un ítem no pudo realizarse, anote en la sección de problemas
 las razones.
 
 - [X] Tabla de instrucciones IAS completada.
-- [ ] Preguntas del ejercicio respondidas.
+- [X] Preguntas del ejercicio respondidas.
 - [X] Código RTL completo.
 - [ ] Código Assembler completo.
 - [ ] Revisión de ortografía con ~ispell-buffer~.
@@ -248,8 +249,8 @@ las razones.
 
 ** Problemas con la tarea / logísticos
 
-- Tarea $X_1$ no pudo completarse debido a:
-- Tarea $X_2$ no pudo completarse debido a:
+- Tarea $X_1$ no pudo completarse debido a: N/A
+- Tarea $X_2$ no pudo completarse debido a: N/A
 
 #+print_bibliography:
 
