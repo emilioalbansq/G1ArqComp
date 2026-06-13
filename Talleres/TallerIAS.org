@@ -113,7 +113,7 @@ sobre las palabras clave.
     00001001 & 0x09       &  LOAD MQ, M(X)     & $[MQ]\leftarrow[X]$\\
     00100001 & 0x21       &  STOR M(X)         & $[X]\leftarrow[AC]$\\
     00000001 & 0x01       &  LOAD M(X)         & $[AC]\leftarrow[X]$\\
-    00000010 & 0x02       &  LOAD -M(X)        & $[AC]\leftarrow-[X]$        
+    00000010 & 0x02       &  LOAD -M(X)        & $[AC]\leftarrow-[X]$\\        
     00000011 & 0x03       &  LOAD |M(X)|       & $[AC]\leftarrow|[X]|$\\
     00000100 & 0x04       &  LOAD -|M(X)|      & $[AC]\leftarrow-|[X]|$\\
     00001101 & 0x0D       &  JUMP M(X,0:19)    & $[PC]\leftarrowX(0:19)$ (IZQ)\\
@@ -217,7 +217,13 @@ Escriba el código Assembler del programa que ejecuta el computador IAS.
 
 #+begin_src
 LOAD M(940)
-
+SUB M(941)
+STOR M(940)
+LSH
+STOR M(941)
+LOAD-M(940)
+STOR M(940)
+HALT
 #+end_src
 
 * Equipo de Trabajo
@@ -230,10 +236,10 @@ Complete la información de los integrantes del grupo.
 | Emilio Alban   | emilio.alban@epn.edu.ec   | Líder      |
 | Ariel Montufar | ariel.montufar@epn.edu.ec | Integrante |
 | Karen Suarez   | karen.suarez01@epn.edu.ec | Integrante |
-|                |                           |            |
+| Samuel Churaco | samuel.churaco@epn.edu.ec | Integrante |
 |----------------+---------------------------+------------|
 
-* Verificación de Entregables [42%]
+* Verificación de Entregables [100%]
 
 Ejecute ~C-c C-c~ sobre los ítems de tarea según se hayan cumplido o
 no. Si un ítem no pudo realizarse, anote en la sección de problemas
@@ -242,10 +248,10 @@ las razones.
 - [X] Tabla de instrucciones IAS completada.
 - [X] Preguntas del ejercicio respondidas.
 - [X] Código RTL completo.
-- [ ] Código Assembler completo.
-- [ ] Revisión de ortografía con ~ispell-buffer~.
-- [ ] Exportación a PDF con ~M-x org-latex-export-to-pdf~.
-- [ ] Subir al aula virtual archivo ~.org~ y ~.pdf~.
+- [X] Código Assembler completo.
+- [X] Revisión de ortografía con ~ispell-buffer~.
+- [X] Exportación a PDF con ~M-x org-latex-export-to-pdf~.
+- [X] Subir al aula virtual archivo ~.org~ y ~.pdf~.
 
 ** Problemas con la tarea / logísticos
 
