@@ -6,9 +6,9 @@
 
 #+title: Taller — Máquina IAS / Von Neumann
 #+subtitle: ICCD332 Arquitectura de Computadores
-#+author: [Nombres de los integrantes del grupo]
-#+email: lenin.falconi@epn.edu.ec
-#+date: [Fecha de entrega]
+#+author: Emilio Alban, Ariel Montufar, Karen Suarez, Samuel Churaco
+#+email: emilio.alban@epn.edu.ec
+#+date: 2026-06-12
 #+language: es
 #+creator: Emacs 27.1 (Org mode 9.7.5)
 #+cite_export: biblatex
@@ -108,13 +108,29 @@ sobre las palabras clave.
   \centering
   \begin{tabular}{|cccc|}
     \hline
-    Opcode   & Opcode Hex &  Símbolo          & RTL \\ \hline
-    00001010 & 0x0A       &  LOAD MQ          & $[AC]\leftarrow[MQ]$\\
-    00001001 & 0x09       &  LOAD MQ, M(X)    & $[MQ]\leftarrow[X]$\\
-    00100001 & 0x21       &  STOR M(X)        & $[X]\leftarrow[AC]$\\
-    00000010 & 0x02       &  LOAD M(X)        & $[AC]\leftarrow[X]$\\
-    00000011 & 0x03       &  LOAD |M(X)|      & $[AC]\leftarrow|[X]|$\\
-    00000100 & 0x04       &  LOAD -|M(X)|     & $[AC]\leftarrow-|[X]|$\\
+    Opcode   & Opcode Hex &  Símbolo           & RTL \\ \hline
+    00001010 & 0x0A       &  LOAD MQ           & $[AC]\leftarrow[MQ]$\\
+    00001001 & 0x09       &  LOAD MQ, M(X)     & $[MQ]\leftarrow[X]$\\
+    00100001 & 0x21       &  STOR M(X)         & $[X]\leftarrow[AC]$\\
+    00000001 & 0x01       &  LOAD M(X)         & $[AC]\leftarrow[X]$\\
+    00000010 & 0x02       &  LOAD -M(X)        & $[AC]\leftarrow-[X]$        
+    00000011 & 0x03       &  LOAD |M(X)|       & $[AC]\leftarrow|[X]|$\\
+    00000100 & 0x04       &  LOAD -|M(X)|      & $[AC]\leftarrow-|[X]|$\\
+    00001101 & 0x0D       &  JUMP M(X,0:19)    & $[PC]\leftarrowX(0:19)$ (IZQ)\\
+    00001110 & 0x0E       &  JUMP M(X,20:39)   & $[PC]\leftarrowX(20:39$ (DER) \\
+    00001111 & 0x0F       &  JUMP + M(X,0:19)  & $If[AC]\geq0,then[PC]\leftarrowX(0:19)$ (IZQ)\\
+    00010000 & 0x10       &  JUMP + M(X,20:39) & $If[AC]\geq0,then[PC]\leftarrowX(20:39)$ (DER)\\
+    00000101 & 0x05       &  ADD M(X)          & $[AC]\leftarrow[AC]+[X]$ \\
+    00000111 & 0x07       &  ADD |M(X)|        & $[AC]\leftarrow[AC]+|[X]|$ \\
+    00000110 & 0x06       &  SUB M(X)          & $[AC]\leftarrow[AC]-[X]$ \\
+    00001000 & 0x08       &  SUB |M(X)|        & $[AC]\leftarrow[AC]-|[X]|$ \\
+    00001011 & 0x0B       &  MUL M(X)          & $[AC,MQ]\leftarrow[MQ]\times[X]$ \\
+    00001100 & 0x0C       &  DIV M(X)          & $[MQ,AC]\leftarrow[AC]\div[X]$ \\
+    00010100 & 0x14       &  LSH               & $[AC]\leftarrow[AC]\times2$ \\
+    00010101 & 0x15       &  RSH               & $[AC]\leftarrow[AC]\div2$ \\
+    00010010 & 0x12       &  STOR M(X,8:19)    & $[X](8:19)\leftarrow[AC](28:39)$ \\
+    00010011 & 0x13       &  STOR M(X,28:39)   & $[X](28:39)\leftarrow[AC](28:39)$ \\
+    10011001 & 0x99       &  HALT              & $-----$ \\
     \hline
   \end{tabular}
 \end{table}
@@ -193,21 +209,21 @@ LOAD M(940)
 
 Complete la información de los integrantes del grupo.
 
-|-----------------+-------------------------+-------------|
-| Nombre          | Email                   | Rol         |
-|-----------------+-------------------------+-------------|
-|                 |                         |             |
-|                 |                         |             |
-|                 |                         |             |
-|-----------------+-------------------------+-------------|
+|----------------+---------------------------+------------|
+| Nombre         | Email                     | Rol        |
+|----------------+---------------------------+------------|
+| Emilio Alban   | emilio.alban@epn.edu.ec   | Líder      |
+| Ariel Montufar | ariel.montufar@epn.edu.ec | Integrante |
+|                |                           |            |
+|----------------+---------------------------+------------|
 
-* Verificación de Entregables [0%]
+* Verificación de Entregables [14%]
 
 Ejecute ~C-c C-c~ sobre los ítems de tarea según se hayan cumplido o
 no. Si un ítem no pudo realizarse, anote en la sección de problemas
 las razones.
 
-- [ ] Tabla de instrucciones IAS completada.
+- [X] Tabla de instrucciones IAS completada.
 - [ ] Preguntas del ejercicio respondidas.
 - [ ] Código RTL completo.
 - [ ] Código Assembler completo.
