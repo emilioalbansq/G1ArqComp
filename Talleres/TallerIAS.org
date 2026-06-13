@@ -6,7 +6,7 @@
 
 #+title: Taller — Máquina IAS / Von Neumann
 #+subtitle: ICCD332 Arquitectura de Computadores
-#+author: Emilio Alban, Ariel Montufar, Karen Suarez, Samuel Churaco
+#+author: [Emilio Alban, Ariel Montufar, Karen Suarez, Samuel Churaco]
 #+email: emilio.alban@epn.edu.ec
 #+date: 2026-06-12
 #+language: es
@@ -172,28 +172,42 @@ RTL.
 1. ¿Qué resultado se tiene al final en el registro del acumulador?
 
    Respuesta:
-   $[AC] \leftarrow ???$
-
+   El valor final en el acumulador es -3
+   $[AC] \leftarrow -3$
+   
 2. ¿Se sobrescribe algún registro como resultado de la ejecución? Si
    es verdadero, indique qué registro y con qué valor.
+   Sí, tanto la memoria como el acumulador se sobrescriben durante la
+   ejecución.
+   Los valores finales en las direcciones de memoria modificadas son:
    Respuesta:
-   - $[940] \leftarrow ???$
-   - $[941] \leftarrow ???$
-   - $[AC] \leftarrow ???$
+   - $[940] \leftarrow -3$ (Primero se sobrescribió con 3, y al final con -3)
+   - $[941] \leftarrow 6$
+   - $[AC] \leftarrow -3$
 
 3. ¿Cuál es el valor del bit de Carry? ¿Qué operación modifica el bit?
    Respuesta:
-   - $Carry = ???$
+   - $Carry = 0$
 
-   - 
+   - No se produce desbordamiento (overflow) en ninguna de las
+     operaciones aritméticas. La resta ($5 - 2$) y el desplazamiento a
+     la izquierda ($3 \times 2$) generan resultados que caben
+     perfectamente dentro de la capacidad de 40 bits del acumulador de
+     la máquina IAS, por lo que el bit de Carry para indicar un error
+     de magnitud se mantiene en 0.
 
 *** Código RTL
 
 Escriba en notación de transferencia de registros el programa que
 ejecuta el computador IAS.
-
- - $[AC] \leftarrow [940]$
- - ...
+ -  $[AC]\leftarrow[940]$
+ - $[AC]\leftarrow[AC]-[941]$
+ - $[940]\leftarrow[AC]$
+ - $[AC]\leftarrow[AC]\times2$
+ - $[941]\leftarrow[AC]$
+ - $[AC]\leftarrow-[940]$
+ - $[940]\leftarrow[AC]$
+ - $HALT$
 
 
 *** Código Assembler
@@ -214,10 +228,11 @@ Complete la información de los integrantes del grupo.
 |----------------+---------------------------+------------|
 | Emilio Alban   | emilio.alban@epn.edu.ec   | Líder      |
 | Ariel Montufar | ariel.montufar@epn.edu.ec | Integrante |
+| Karen Suarez   | karen.suarez01@epn.edu.ec | Integrante |
 |                |                           |            |
 |----------------+---------------------------+------------|
 
-* Verificación de Entregables [14%]
+* Verificación de Entregables [28%]
 
 Ejecute ~C-c C-c~ sobre los ítems de tarea según se hayan cumplido o
 no. Si un ítem no pudo realizarse, anote en la sección de problemas
@@ -225,7 +240,7 @@ las razones.
 
 - [X] Tabla de instrucciones IAS completada.
 - [ ] Preguntas del ejercicio respondidas.
-- [ ] Código RTL completo.
+- [X] Código RTL completo.
 - [ ] Código Assembler completo.
 - [ ] Revisión de ortografía con ~ispell-buffer~.
 - [ ] Exportación a PDF con ~M-x org-latex-export-to-pdf~.
