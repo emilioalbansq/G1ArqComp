@@ -82,16 +82,27 @@ entrenar un modelo.
    verifique ejecutando el comando ~pwd~
 
    #+begin_src shell :exports both
-     
+   cd
+   pwd
    #+end_src
+
+
+
 2. Cree tres directorios denominados FashionData, Train y
    Test. Verifique usando el comando ~ls~
-   #+begin_src shell :exports both
-     
+   #+begin_src shell :exports both :results output
+   ls -ld ~/FashionData ~/Train ~/Test
    #+end_src
+
+   #+RESULTS:
+   : drwxr-xr-x 2 arielmontufar arielmontufar 4096 Jun 25 21:59 /home/arielmontufar/FashionData
+   : drwxr-xr-x 2 arielmontufar arielmontufar 4096 Jun 25 22:13 /home/arielmontufar/Test
+   : drwxr-xr-x 2 arielmontufar arielmontufar 4096 Jun 25 21:59 /home/arielmontufar/Train
+
+
 3. Investigue sobre el comando ~wget~ y utilícelo para descargar en
    ~/FashionData los datos de train y test del /Fashion-Mnist desde el
-   siguiente enlace: [[https://github.com/zalandoresearch/fashion-mnist][fashion-mnist]]
+   siguiente enlace: [[https://github.com/zalandoresearch/fashion-mnist][fashion>-mnist]]
    1. Imágenes de entrenamiento:
 
       http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz
@@ -104,41 +115,115 @@ entrenar un modelo.
    4. Etiquetas de prueba:
 
       http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz
-   #+begin_src shell :exports both
+   #+begin_src shell :exports both :results output
 
+cd ~/FashionData
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz
+
+ls -lh
    #+end_src
+
+   #+RESULTS:
+   : total 30M
+   : -rw-r--r-- 1 arielmontufar arielmontufar 4.3M Aug 31  2017 t10k-images-idx3-ubyte.gz
+   : -rw-r--r-- 1 arielmontufar arielmontufar 5.1K Aug 31  2017 t10k-labels-idx1-ubyte.gz
+   : -rw-r--r-- 1 arielmontufar arielmontufar  26M Aug 31  2017 train-images-idx3-ubyte.gz
+   : -rw-r--r-- 1 arielmontufar arielmontufar  29K Aug 31  2017 train-labels-idx1-ubyte.gz
+
 4. Utilice el comando ~mv~ de manera recursiva para pasar los datos de
    entrenamiento a la carpeta ~/Train
-   #+begin_src shell :exports both
+   #+begin_src shell :exports both :results output
+mv ~/FashionData/*train* ~/Train/
+ls -lh ~/Train/
 
    #+end_src
+
+   #+RESULTS:
+   : total 51M
+   : -rw-r--r-- 1 arielmontufar arielmontufar 26M Aug 31  2017 train-images-idx3-ubyte.gz
+   : -rw-r--r-- 1 arielmontufar arielmontufar 26M Aug 31  2017 train-images-idx3-ubyte.gz.1
+   : -rw-r--r-- 1 arielmontufar arielmontufar 29K Aug 31  2017 train-labels-idx1-ubyte.gz
+
 5. Utilice el comando ~mv~ de manera recursiva para pasar los datos de
    prueba a la carpeta ~/Test
-   #+begin_src shell :exports both
-
+   #+begin_src shell :exports both :results output
+mv ~/FashionData/t10k* ~/Test/
+ls -lh ~/Test/
    #+end_src
+
+   #+RESULTS:
+   : total 4.3M
+   : -rw-r--r-- 1 arielmontufar arielmontufar 4.3M Aug 31  2017 t10k-images-idx3-ubyte.gz
+   : -rw-r--r-- 1 arielmontufar arielmontufar 5.1K Aug 31  2017 t10k-labels-idx1-ubyte.gz
+
 6. Verifique que la carpeta FashionData está vacía
-   #+begin_src shell :exports both
-
+   #+begin_src shell :exports both :results output
+ls -lh ~/FashionData/
    #+end_src
+
+   #+RESULTS:
+   : total 0
+
 7. Los archivos anteriores están comprimidos. Investigue como
    descomprimir usando el comando ~gunzip~. Si es necesario realice la
    instalación del comando. Descomprima los archivos en sus
    respectivas carpetas. Apunte el comando utilizado para la descompresión.
-   #+begin_src shell :exports both
-
+   #+begin_src shell :exports both :results output
+gunzip -d ~/Train/*.gz
+gunzip -d ~/Test/*.gz
+ls -lh ~/Train/
+ls -lh ~/Test/
    #+end_src
+
+   #+RESULTS:
+   : total 45M
+   : -rw-r--r-- 1 arielmontufar arielmontufar 45M Aug 31  2017 train-images-idx3-ubyte
+   : -rw-r--r-- 1 arielmontufar arielmontufar 59K Aug 31  2017 train-labels-idx1-ubyte
+   : total 7.5M
+   : -rw-r--r-- 1 arielmontufar arielmontufar 7.5M Aug 31  2017 t10k-images-idx3-ubyte
+   : -rw-r--r-- 1 arielmontufar arielmontufar 9.8K Aug 31  2017 t10k-labels-idx1-ubyte
 
 8. Mueva recursivamente las carpetas ~/Train y ~/Test dentro de ~/FashionData
-   #+begin_src shell :exports both
-
+   #+begin_src shell :exports both :results output
+mv ~/Train ~/FashionData/
+mv ~/Test ~/FashionData/
+ls -R ~/FashionData/
    #+end_src
+
+   #+RESULTS:
+   #+begin_example
+   /home/arielmontufar/FashionData/:
+   Test
+   Train
+
+   /home/arielmontufar/FashionData/Test:
+   t10k-images-idx3-ubyte
+   t10k-labels-idx1-ubyte
+
+   /home/arielmontufar/FashionData/Train:
+   train-images-idx3-ubyte
+   train-labels-idx1-ubyte
+   #+end_example
 
 9. Verifique la estructura de la carpeta ~/FashionData usando el
    comando ~tree~
-   #+begin_src shell :exports both
-
+   #+begin_src shell :exports both :results output
+tree ~/FashionData/
    #+end_src
+
+   #+RESULTS:
+   : /home/arielmontufar/FashionData/
+   : ├── Test
+   : │   ├── t10k-images-idx3-ubyte
+   : │   └── t10k-labels-idx1-ubyte
+   : └── Train
+   :     ├── train-images-idx3-ubyte
+   :     └── train-labels-idx1-ubyte
+   : 
+   : 3 directories, 4 files
 
 
 
