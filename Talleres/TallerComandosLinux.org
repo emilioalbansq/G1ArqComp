@@ -5,8 +5,8 @@
 #+options: tasks:t tex:t timestamp:t title:t toc:nil todo:t |:t
 #+title: Taller de Comandos Linux
 #+date: 2026-06-19
-#+author: NOMBRE DE LOS INTEGRANTES
-#+email: EMAIL - LIDER GRUPO
+#+author: Emilio Albán, Ariel Montufar, Samuel Churaco, Karen Suarez
+#+email: emilio.alban@epn.edu.ec
 #+language: Español
 #+select_tags: export
 #+exclude_tags: noexport
