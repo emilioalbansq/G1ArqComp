@@ -7,6 +7,7 @@
 #+date: 2026-06-19
 #+author: Emilio Albán, Ariel Montufar, Samuel Churaco, Karen Suarez
 #+email: emilio.alban@epn.edu.ec
+#+PROPERTY: header-args :eval never-export
 #+language: Español
 #+select_tags: export
 #+exclude_tags: noexport
@@ -85,6 +86,9 @@ entrenar un modelo.
    cd
    pwd
    #+end_src
+
+   #+RESULTS:
+   : /home/arielmontufar
 
 
 
@@ -233,7 +237,8 @@ tree ~/FashionData/
 :END:
 
 Se desea realizar un registro climatológico de la ciudad de
-Quito. Para esto, escriba un script de Python/Java que permita obtener datos climatológicos desde el API de
+Quito. Para esto, escriba un script de Python/Java que permita obtener
+datos climatológicos desde el API de
 [[https://openweathermap.org/current#one][openweathermap]]. Considere la latitud y la longitud de Quito como
 (-0.2299, -78.5249), respectivamente. Los resultados obtenidos de
 la consulta al API se escriben en un archivo
@@ -246,21 +251,158 @@ se realizan en Linux o en el WSL. Las etapas del problema se
 subdividen en:
     
 1. Crear su API gratuito en [[https://openweathermap.org/current#one][openweathermap]]
+   API: f0a67d31e3a1532c0e0404b8b5b2525f
 2. Escribir un script en Python/Java que realice la consulta al API y
    escriba los resultados en /clima-quito-hoy.csv/
-       
-   #+begin_src python :exports both
+   1. Primero se creó el archivo clima-quito-hoy.csv en la terminal
+      con touch.
+   2. Desarrollo del Script:
+      Importante: Se utilizó la librería externa JSON, por lo tanto se
+      instaló el json-20231013.jar, se lo compiló y ejecutó con el
+      .jar ya mencionado (ya compilado y ejecutando en la terminal de
+      esta manera):
 
+#+begin_src shell
+javac -cp .:json-20231013.jar RegistroClimaticoQuito.java
+java -cp .:json-20231013.jar RegistroClimaticoQuito
+#+end_src
+
+#+RESULTS:
+: Datos guardados correctamente.
+
+   #+begin_src java :exports both
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.*;
+import org.json.*;
+import java.time.LocalDateTime;
+
+public class RegistroClimaticoQuito{
+
+    //API KEY generado de OpenWeatherMap
+    private static final String API_KEY = "f0a67d31e3a1532c0e0404b8b5b2525f";
+    //Latitud y Longitud de Quito
+    private static final double LATITUD = -0.2299;
+    private static final double LONGITUD = -78.5249;
+
+    //Nombre del archivo en donde se escribiran los resultados
+    private static final String ARCHIVO = "clima-quito-hoy.csv";
+
+    public static void main(String[] args) {
+	try{ //Controlar errores y que el programa no quede sin finalizar
+	    String url = construirURL(); //Se construye el URL Del API
+	    String respuesta = consultarAPI(url); //Se consulta el API y se obtiene la respuesta JSON Como texto
+	    JSONObject datos = convertirJSON(respuesta); //Se convierte de String-JSON a objeto JSON
+	    guardarCSV(datos); //Se guardan los datos en clima-quito-hoy.csv
+
+            System.out.println("Datos guardados correctamente.");
+
+        }catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static String construirURL(){
+        // se arma la URL con latitud, longitud de Quito, unidades(C°) y API key
+        String url =
+                "https://api.openweathermap.org/data/2.5/weather"
+                + "?lat=" + LATITUD
+                + "&lon=" + LONGITUD
+                + "&units=metric"
+                + "&lang=es"
+                + "&appid=" + API_KEY;
+
+        // se retorna la URL completa
+        return url;
+    }
+
+    public static String consultarAPI(String urlString) throws Exception {
+
+        URL url = new URL(urlString);// crear objeto URL apartir del string URL
+        HttpURLConnection con = (HttpURLConnection) url.openConnection(); // abrir conexión HTTP
+        con.setRequestMethod("GET");// definir método GET
+	
+        // Se lee respuesta del servidor
+        BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+        StringBuilder respuesta = new StringBuilder();// almacenar respuesta completa
+        String linea; // variable para lectura línea por línea
+        // leer todo el contenido de la respuesta
+        while ((linea = reader.readLine()) != null) {
+            respuesta.append(linea);
+        }
+        
+        reader.close();// cerrar lector
+        return respuesta.toString();// devolver JSON como texto
+    }
+
+    public static JSONObject convertirJSON(String respuesta) {
+        // convertir string JSON a objeto JSON para los datos al .csv
+        JSONObject obj = new JSONObject(respuesta);
+        // retornar objeto JSON
+        return obj;
+    }
+
+    public static void guardarCSV(JSONObject obj) throws Exception {
+
+        // verifica si el archivo ya existe cuando se coloque el encabezado
+        File file = new File(ARCHIVO);
+        FileWriter csvWriter = new FileWriter(ARCHIVO, true); //se abre el archivo en modo append (no borra datos anteriores)
+
+        // si el archivo está vacío/nuevo,se escribe el encabezado
+        if (file.length() == 0) {
+            csvWriter.append("fecha,ciudad,temperatura,humedad,presion,descripcion\n");
+        }
+
+	String fechaHora = LocalDateTime.now().toString(); //Fecha de guardado
+        //SE EXTRAE DATOS DEL JSON:
+        String ciudad = obj.getString("name"); //el nombre de la ciudad
+        JSONObject main = obj.getJSONObject("main"); // el conjunto main del JSON de lo retornado a la llamada API (dado que contiene temp, feels_like, temp_min, etc..)
+        double temp = main.getDouble("temp"); // temperatura del conjunto main
+        int humedad = main.getInt("humidity");// humedad del conjunto main
+        int presion = main.getInt("pressure");// presión del conjunto main
+        JSONArray weather = obj.getJSONArray("weather");//el arreglo weather del JSON de lo retornado a la llamada API
+        String descripcion = weather.getJSONObject(0).getString("description");//descripción del clima (guardado en el primer valor, por eso el 0)
+	
+        // ESCRIBIR EN CSV usando coma como separador
+        csvWriter.append(fechaHora + "," +
+                         ciudad + "," +
+                         temp + "," +
+                         humedad + "," +
+                         presion + "," +
+                         descripcion + "\n");
+        csvWriter.close();//se cierra el archivo
+    }
+}
    #+end_src
-
+   
 3. Desarrollar un ejecutable /get-weather.sh/ para ejecutar el
    programa Python/Java.
+   Nota: Se creó el .sh en la terminal con touch y su
+   contenido es el siguiente:
 
    #+begin_src shell :exports both
+   #!/bin/bash
+# 1. Ubica el script en el directorio del proyecto
+cd "$(dirname "$0")"
 
+# 2. Se compila el archivo Java
+javac -cp .:json-20231013.jar RegistroClimaticoQuito.java
 
+# 3. Ejecuta el programa Java usando el classpath especificado
+java -cp .:json-20231013.jar RegistroClimaticoQuito
+
+# 4. Dar permisos de ejecución pero directamente desde la terminal con: chmod +x get-weather.sh
    #+end_src
+
 
 4. Configurar Crontab para la adquisición de datos. Escriba el comando
    configurado.
-       
+
+   #+begin_src shell :exports both
+crontab -e
+# Se agrega directamente a la linea del crontab:
+# */5 * * * * $HOME/G1ArqComp/G1ArqComp/Talleres/get-weather.sh
+# significa cada 5 minutos el cron ejecutará el programa.
+   #+end_src
+   

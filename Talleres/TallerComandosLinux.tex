@@ -1,0 +1,424 @@
+% Created 2026-06-27 Sat 00:05
+% Intended LaTeX compiler: pdflatex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+
+\usepackage{fancyhdr}
+\usepackage[top=25mm, left=25mm, right=25mm]{geometry}
+\usepackage{longtable}
+\fancyhead[R]{}
+\setlength\headheight{43.0pt}
+\author{Emilio Albán, Ariel Montufar, Samuel Churaco, Karen Suarez}
+\date{2026-06-19}
+\title{Taller de Comandos Linux}
+\hypersetup{
+ pdfauthor={Emilio Albán, Ariel Montufar, Samuel Churaco, Karen Suarez},
+ pdftitle={Taller de Comandos Linux},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.1 (Org mode 9.7.5)}, 
+ pdflang={Español}}
+\begin{document}
+
+\maketitle
+\fancyhead[C]{\includegraphics[scale=0.05]{../images/logoEPN.jpg}\\
+ESCUELA POLITÉCNICA NACIONAL\\FACULTAD DE INGENIERÍA DE SISTEMAS\\
+ARQUITECTURA DE COMPUTADORES}
+\thispagestyle{fancy}
+
+
+\section{Objetivos}
+\label{sec:orgf409a0e}
+
+\begin{itemize}
+\item Conocer el funcionamiento del terminal de \emph{Linux}
+\item Aprender a manejar comandos del terminal de \emph{Linux}
+\end{itemize}
+
+\section{Instrucciones}
+\label{sec:org0f5000a}
+Este taller/tutorial de comandos de Linux tiene por objetivo ejercitar
+en la aplicación de comandos estudiados en clase. Para esto siga las
+Instrucciones indicadas en cada uno de los numerales. Ejecute los
+ejercicios llenando los comandos adecuados dentro de los bloques de
+código de Emacs Org. Los resultados de la ejecución se obtienen
+haciendo \texttt{C-c C-c}
+
+Para todos los ejercicios se sugiere usar directamente un
+distro de \emph{Linux} o el \emph{WSL} configurado para la clase de
+\emph{Arquitectura de Computadores}. Ejecute los comandos en la terminal de
+Linux. Copie los comandos usados a este archivo.
+
+Si se ha utilizado IA para consultar temas referentes al desarrollo de
+código en el punto \ref{sec:orgcc5575e}, adjunte el archivo \texttt{.md} con el
+reporte de los diferentes prompts y respuestas dadas por la IA.
+
+\subsection{Ejecución desde Emacs}
+\label{sec:org7b45ed5}
+
+Si desea ejecutar los comandos desde Emacs debe observar que los
+comandos del \texttt{shell} de Linux se ejecutarán desde la ubicación del
+archivo \texttt{.org}. Por tanto, controle la ubicación de \texttt{home} en los
+bloques de código. Para ejecutar los bloques de código ejecute: \texttt{C-c C-c}. 
+
+\section{Comandos de Linux}
+\label{sec:orgfe75a79}
+Para este taller descargaremos los datos del \emph{Fashion-Mnist}, un
+dataset popular para la prueba de algoritmos de machine learning. Al
+final, el dataset quedará organizado para ser aprovechado para
+entrenar un modelo.
+
+\begin{enumerate}
+\item Utilice \texttt{cd} para localizarse en la posición de home de su usuario y
+verifique ejecutando el comando \texttt{pwd}
+
+\begin{verbatim}
+   cd
+   pwd
+\end{verbatim}
+
+\begin{verbatim}
+/home/arielmontufar
+\end{verbatim}
+\end{enumerate}
+
+
+
+\begin{enumerate}
+\item Cree tres directorios denominados FashionData, Train y
+Test. Verifique usando el comando \texttt{ls}
+\begin{verbatim}
+   ls -ld ~/FashionData ~/Train ~/Test
+\end{verbatim}
+
+\begin{verbatim}
+drwxr-xr-x 2 arielmontufar arielmontufar 4096 Jun 25 21:59 /home/arielmontufar/FashionData
+drwxr-xr-x 2 arielmontufar arielmontufar 4096 Jun 25 22:13 /home/arielmontufar/Test
+drwxr-xr-x 2 arielmontufar arielmontufar 4096 Jun 25 21:59 /home/arielmontufar/Train
+\end{verbatim}
+\end{enumerate}
+
+
+\begin{enumerate}
+\item Investigue sobre el comando \texttt{wget} y utilícelo para descargar en
+\textasciitilde{}/FashionData los datos de train y test del /Fashion-Mnist desde el
+siguiente enlace: \href{https://github.com/zalandoresearch/fashion-mnist}{fashion>-mnist}
+\begin{enumerate}
+\item Imágenes de entrenamiento:
+
+\url{http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz}
+\item Etiquetas de entrenamiento:
+
+\url{http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz}
+\item Imágenes de prueba:
+
+\url{http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz}
+\item Etiquetas de prueba:
+
+\url{http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz}
+\end{enumerate}
+\begin{verbatim}
+
+cd ~/FashionData
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz
+wget -c http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz
+
+ls -lh
+\end{verbatim}
+
+\begin{verbatim}
+total 30M
+-rw-r--r-- 1 arielmontufar arielmontufar 4.3M Aug 31  2017 t10k-images-idx3-ubyte.gz
+-rw-r--r-- 1 arielmontufar arielmontufar 5.1K Aug 31  2017 t10k-labels-idx1-ubyte.gz
+-rw-r--r-- 1 arielmontufar arielmontufar  26M Aug 31  2017 train-images-idx3-ubyte.gz
+-rw-r--r-- 1 arielmontufar arielmontufar  29K Aug 31  2017 train-labels-idx1-ubyte.gz
+\end{verbatim}
+
+\item Utilice el comando \texttt{mv} de manera recursiva para pasar los datos de
+entrenamiento a la carpeta \textasciitilde{}/Train
+\begin{verbatim}
+mv ~/FashionData/*train* ~/Train/
+ls -lh ~/Train/
+
+\end{verbatim}
+
+\begin{verbatim}
+total 51M
+-rw-r--r-- 1 arielmontufar arielmontufar 26M Aug 31  2017 train-images-idx3-ubyte.gz
+-rw-r--r-- 1 arielmontufar arielmontufar 26M Aug 31  2017 train-images-idx3-ubyte.gz.1
+-rw-r--r-- 1 arielmontufar arielmontufar 29K Aug 31  2017 train-labels-idx1-ubyte.gz
+\end{verbatim}
+
+\item Utilice el comando \texttt{mv} de manera recursiva para pasar los datos de
+prueba a la carpeta \textasciitilde{}/Test
+\begin{verbatim}
+mv ~/FashionData/t10k* ~/Test/
+ls -lh ~/Test/
+\end{verbatim}
+
+\begin{verbatim}
+total 4.3M
+-rw-r--r-- 1 arielmontufar arielmontufar 4.3M Aug 31  2017 t10k-images-idx3-ubyte.gz
+-rw-r--r-- 1 arielmontufar arielmontufar 5.1K Aug 31  2017 t10k-labels-idx1-ubyte.gz
+\end{verbatim}
+
+\item Verifique que la carpeta FashionData está vacía
+\begin{verbatim}
+ls -lh ~/FashionData/
+\end{verbatim}
+
+\begin{verbatim}
+total 0
+\end{verbatim}
+
+\item Los archivos anteriores están comprimidos. Investigue como
+descomprimir usando el comando \texttt{gunzip}. Si es necesario realice la
+instalación del comando. Descomprima los archivos en sus
+respectivas carpetas. Apunte el comando utilizado para la descompresión.
+\begin{verbatim}
+gunzip -d ~/Train/*.gz
+gunzip -d ~/Test/*.gz
+ls -lh ~/Train/
+ls -lh ~/Test/
+\end{verbatim}
+
+\begin{verbatim}
+total 45M
+-rw-r--r-- 1 arielmontufar arielmontufar 45M Aug 31  2017 train-images-idx3-ubyte
+-rw-r--r-- 1 arielmontufar arielmontufar 59K Aug 31  2017 train-labels-idx1-ubyte
+total 7.5M
+-rw-r--r-- 1 arielmontufar arielmontufar 7.5M Aug 31  2017 t10k-images-idx3-ubyte
+-rw-r--r-- 1 arielmontufar arielmontufar 9.8K Aug 31  2017 t10k-labels-idx1-ubyte
+\end{verbatim}
+
+\item Mueva recursivamente las carpetas \textasciitilde{}/Train y \textasciitilde{}/Test dentro de \textasciitilde{}/FashionData
+\begin{verbatim}
+mv ~/Train ~/FashionData/
+mv ~/Test ~/FashionData/
+ls -R ~/FashionData/
+\end{verbatim}
+
+\begin{verbatim}
+   /home/arielmontufar/FashionData/:
+   Test
+   Train
+
+   /home/arielmontufar/FashionData/Test:
+   t10k-images-idx3-ubyte
+   t10k-labels-idx1-ubyte
+
+   /home/arielmontufar/FashionData/Train:
+   train-images-idx3-ubyte
+   train-labels-idx1-ubyte
+\end{verbatim}
+
+\item Verifique la estructura de la carpeta \texttt{/FashionData usando el
+   comando \textasciitilde{}tree}
+\begin{verbatim}
+tree ~/FashionData/
+\end{verbatim}
+
+\begin{verbatim}
+/home/arielmontufar/FashionData/
+├── Test
+│   ├── t10k-images-idx3-ubyte
+│   └── t10k-labels-idx1-ubyte
+└── Train
+    ├── train-images-idx3-ubyte
+    └── train-labels-idx1-ubyte
+
+3 directories, 4 files
+\end{verbatim}
+\end{enumerate}
+
+
+
+\section{Problema}
+\label{sec:orgcc5575e}
+Se desea realizar un registro climatológico de la ciudad de
+Quito. Para esto, escriba un script de Python/Java que permita obtener
+datos climatológicos desde el API de
+\href{https://openweathermap.org/current\#one}{openweathermap}. Considere la latitud y la longitud de Quito como
+(-0.2299, -78.5249), respectivamente. Los resultados obtenidos de
+la consulta al API se escriben en un archivo
+\emph{clima-quito-hoy.csv}. Cada ejecución del script debe almacenar
+nuevos datos en el archivo. Investigue sobre \textbf{crontab} y utilícelo
+para obtener datos del API de \emph{openweathermap} cada 5 minutos
+mediante la ejecución de un archivo ejecutable denominado
+\emph{get-weather.sh}. Verifique los resultados. Todas las operaciones
+se realizan en Linux o en el WSL. Las etapas del problema se
+subdividen en:
+
+\begin{enumerate}
+\item Crear su API gratuito en \href{https://openweathermap.org/current\#one}{openweathermap}
+API: f0a67d31e3a1532c0e0404b8b5b2525f
+\item Escribir un script en Python/Java que realice la consulta al API y
+escriba los resultados en \emph{clima-quito-hoy.csv}
+\begin{enumerate}
+\item Primero se creó el archivo clima-quito-hoy.csv en la terminal
+con touch.
+\item Desarrollo del Script:
+Importante: Se utilizó la librería externa JSON, por lo tanto se
+instaló el json-20231013.jar, se lo compiló y ejecutó con el
+.jar ya mencionado (ya compilado y ejecutando en la terminal de
+esta manera):
+\end{enumerate}
+\end{enumerate}
+
+\begin{verbatim}
+javac -cp .:json-20231013.jar RegistroClimaticoQuito.java
+java -cp .:json-20231013.jar RegistroClimaticoQuito
+\end{verbatim}
+
+\begin{verbatim}
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.*;
+import org.json.*;
+import java.time.LocalDateTime;
+
+public class RegistroClimaticoQuito{
+
+    //API KEY generado de OpenWeatherMap
+    private static final String API_KEY = "f0a67d31e3a1532c0e0404b8b5b2525f";
+    //Latitud y Longitud de Quito
+    private static final double LATITUD = -0.2299;
+    private static final double LONGITUD = -78.5249;
+
+    //Nombre del archivo en donde se escribiran los resultados
+    private static final String ARCHIVO = "clima-quito-hoy.csv";
+
+    public static void main(String[] args) {
+	try{ //Controlar errores y que el programa no quede sin finalizar
+	    String url = construirURL(); //Se construye el URL Del API
+	    String respuesta = consultarAPI(url); //Se consulta el API y se obtiene la respuesta JSON Como texto
+	    JSONObject datos = convertirJSON(respuesta); //Se convierte de String-JSON a objeto JSON
+	    guardarCSV(datos); //Se guardan los datos en clima-quito-hoy.csv
+
+            System.out.println("Datos guardados correctamente.");
+
+        }catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static String construirURL(){
+        // se arma la URL con latitud, longitud de Quito, unidades(C°) y API key
+        String url =
+                "https://api.openweathermap.org/data/2.5/weather"
+                + "?lat=" + LATITUD
+                + "&lon=" + LONGITUD
+                + "&units=metric"
+                + "&lang=es"
+                + "&appid=" + API_KEY;
+
+        // se retorna la URL completa
+        return url;
+    }
+
+    public static String consultarAPI(String urlString) throws Exception {
+
+        URL url = new URL(urlString);// crear objeto URL apartir del string URL
+        HttpURLConnection con = (HttpURLConnection) url.openConnection(); // abrir conexión HTTP
+        con.setRequestMethod("GET");// definir método GET
+	
+        // Se lee respuesta del servidor
+        BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+        StringBuilder respuesta = new StringBuilder();// almacenar respuesta completa
+        String linea; // variable para lectura línea por línea
+        // leer todo el contenido de la respuesta
+        while ((linea = reader.readLine()) != null) {
+            respuesta.append(linea);
+        }
+        
+        reader.close();// cerrar lector
+        return respuesta.toString();// devolver JSON como texto
+    }
+
+    public static JSONObject convertirJSON(String respuesta) {
+        // convertir string JSON a objeto JSON para los datos al .csv
+        JSONObject obj = new JSONObject(respuesta);
+        // retornar objeto JSON
+        return obj;
+    }
+
+    public static void guardarCSV(JSONObject obj) throws Exception {
+
+        // verifica si el archivo ya existe cuando se coloque el encabezado
+        File file = new File(ARCHIVO);
+        FileWriter csvWriter = new FileWriter(ARCHIVO, true); //se abre el archivo en modo append (no borra datos anteriores)
+
+        // si el archivo está vacío/nuevo,se escribe el encabezado
+        if (file.length() == 0) {
+            csvWriter.append("fecha,ciudad,temperatura,humedad,presion,descripcion\n");
+        }
+
+	String fechaHora = LocalDateTime.now().toString(); //Fecha de guardado
+        //SE EXTRAE DATOS DEL JSON:
+        String ciudad = obj.getString("name"); //el nombre de la ciudad
+        JSONObject main = obj.getJSONObject("main"); // el conjunto main del JSON de lo retornado a la llamada API (dado que contiene temp, feels_like, temp_min, etc..)
+        double temp = main.getDouble("temp"); // temperatura del conjunto main
+        int humedad = main.getInt("humidity");// humedad del conjunto main
+        int presion = main.getInt("pressure");// presión del conjunto main
+        JSONArray weather = obj.getJSONArray("weather");//el arreglo weather del JSON de lo retornado a la llamada API
+        String descripcion = weather.getJSONObject(0).getString("description");//descripción del clima (guardado en el primer valor, por eso el 0)
+	
+        // ESCRIBIR EN CSV usando coma como separador
+        csvWriter.append(fechaHora + "," +
+                         ciudad + "," +
+                         temp + "," +
+                         humedad + "," +
+                         presion + "," +
+                         descripcion + "\n");
+        csvWriter.close();//se cierra el archivo
+    }
+}
+\end{verbatim}
+
+\begin{enumerate}
+\item Desarrollar un ejecutable \emph{get-weather.sh} para ejecutar el
+programa Python/Java.
+Nota: Se creó el .sh en la terminal con touch y su
+contenido es el siguiente:
+
+\begin{verbatim}
+   #!/bin/bash
+# 1. Ubica el script en el directorio del proyecto
+cd "$(dirname "$0")"
+
+# 2. Se compila el archivo Java
+javac -cp .:json-20231013.jar RegistroClimaticoQuito.java
+
+# 3. Ejecuta el programa Java usando el classpath especificado
+java -cp .:json-20231013.jar RegistroClimaticoQuito
+
+# 4. Dar permisos de ejecución pero directamente desde la terminal con: chmod +x get-weather.sh
+\end{verbatim}
+\end{enumerate}
+
+
+\begin{enumerate}
+\item Configurar Crontab para la adquisición de datos. Escriba el comando
+configurado.
+
+\begin{verbatim}
+crontab -e
+# Se agrega directamente a la linea del crontab:
+# */5 * * * * $HOME/G1ArqComp/G1ArqComp/Talleres/get-weather.sh
+# significa cada 5 minutos el cron ejecutará el programa.
+\end{verbatim}
+\end{enumerate}
+\end{document}
